@@ -39,7 +39,7 @@ async def leverMain(ctx, *args):
 
     nick = member.display_name
 
-    if (nick[0] == '✋'):
+    if (nick[0:3] == "[✋]"):
         afile = open("crampe.txt", "r")
         status = random_line(afile)
         afile.close()
@@ -47,7 +47,7 @@ async def leverMain(ctx, *args):
 
 
     else:
-        handRaisedName = "✋ "+ nick
+        handRaisedName = "[✋] "+ nick
 
         op = ""
         try:
