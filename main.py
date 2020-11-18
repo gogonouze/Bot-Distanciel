@@ -43,12 +43,12 @@ async def leverMain(ctx, *args):
         afile = open("crampe.txt", "r")
         status = random_line(afile)
         afile.close()
-
+        await ctx.send(f'{member.mention}{status}')
 
 
     else:
         handRaisedName = "✋ "+ nick
-        await ctx.send(f'{member.mention}{status}')        
+
         op = ""
         try:
             await member.edit(nick=handRaisedName)
