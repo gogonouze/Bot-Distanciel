@@ -58,7 +58,12 @@ async def leverMain(ctx, *args):
         if time < 5:
             time = 5
 
-        await ctx.send(f'{member.mention} {op} lève la main et risque d\'avoir une crampe dans {time} secondes')
+        msg = ""
+        if time > 60:
+            time = 60 
+            msg = "se croit malin mais regrette un peu. Il"
+
+        await ctx.send(f'{member.mention} {op} {msg} lève la main et risque d\'avoir une crampe dans {time} secondes')
 
         await asyncio.sleep(time)
 
