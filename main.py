@@ -1,22 +1,14 @@
 #python3 main.py
 import discord
 from discord.ext import commands
-import asyncio
-import random
+from leverMain import get_duration, has_nick_prefixe, hand_already_raised, raise_hand 
 
-bot = commands.Bot(command_prefix = "!", description = "Ce bot est là pour aider les étudiants à lever la mains pendant les cours pour participer")
+bot = commands.Bot(command_prefix = "!", description = "Je sers à faciliter les interactions en distanciel")
 
 #a token is needed in token.txt
 tokenfile = open("token.txt", "r")
 token = tokenfile.readline()
 tokenfile.close()
-
-def random_line(afile):
-    line = next(afile)
-    for num, aline in enumerate(afile, 2):
-      if random.randrange(num): continue
-      line = aline
-    return line
 
 @bot.event
 async def on_ready():
@@ -24,56 +16,26 @@ async def on_ready():
 
 @bot.command()
 async def leverMain(ctx, *args):
-    await ctx.message.delete()
+    try:
+        await ctx.message.delete()
+    except:
+        None
 
+    prefix = "[✋]"
     member = ctx.author
-    
-    if not args:
-        time = 5
-    else:
-        try:
-            time = int(args[0])
-        except ValueError:
-            time = 5
-
-
     nick = member.display_name
 
-    if (nick[0:3] == "[✋]"):
-        afile = open("crampe.txt", "r")
-        status = random_line(afile)
-        afile.close()
-        await ctx.send(f'{member.mention}{status}')
+    duration, msg = get_duration(args)
 
-
+    if (has_nick_prefixe(nick, prefix)):
+        await hand_already_raised(ctx, member)
     else:
-        handRaisedName = "[✋] "+ nick
+        await raise_hand(ctx, member, prefix, duration, nick, msg)
 
-        op = ""
-        try:
-            await member.edit(nick=handRaisedName)
-        except:
-            op = "ne peux pas changer de pseudo mais"
-
-        if time < 5:
-            time = 5
-
-        msg = ""
-        if time > 60:
-            time = 60 
-            msg = "se croit malin mais regrette un peu. Il"
-
-        await ctx.send(f'{member.mention} {op} {msg} lève la main et risque d\'avoir une crampe dans {time} secondes')
-
-        await asyncio.sleep(time)
-
-        try:
-            await member.edit(nick=nick)
-        except:
-            None
-
-
+#@bot.command()
+#async def hello(ctx):
+#    member = ctx.author
+#    embedVar = discord.Embed(title=f'{member.display_name} dit hello', color=0xEC941C)
+#    await ctx.send(embed=embedVar)
 
 bot.run(token)
-
-
