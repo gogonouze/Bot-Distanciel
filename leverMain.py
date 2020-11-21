@@ -58,7 +58,7 @@ async def raise_hand(ctx, member, prefix, duration, nick, msg):
         handRaisedName = nick #see below
 
     #instead of handRaisedName, it must be member.display_name. But the nickname doesn't change fast enough /shrug
-    embedVar = discord.Embed(title=f'{handRaisedName}{op}{msg} lève la main et risque d\'avoir une crampe dans {duration} secondes', color=0xEC941C)
+    embedVar = discord.Embed(title=f'{handRaisedName}{op}{msg} lève la main et risque d\'avoir une crampe dans {duration} secondes',description="commande = !leverMain", color=0xEC941C)
     await ctx.send(embed=embedVar)
 
     await asyncio.sleep(duration)

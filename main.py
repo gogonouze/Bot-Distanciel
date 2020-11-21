@@ -35,7 +35,9 @@ async def leverMain(ctx, *args):
 #@bot.command()
 #async def hello(ctx):
 #    member = ctx.author
-#    embedVar = discord.Embed(title=f'{member.display_name} dit hello', color=0xEC941C)
+#    embedVar = discord.Embed(title="Title", description="Desc", color=0x00ff00)
+#    embedVar.add_field(name="Field1", value="hi", inline=True)
+#    embedVar.add_field(name="Field2", value="hi2", inline=False)
 #    await ctx.send(embed=embedVar)
 
 bot.run(token)
